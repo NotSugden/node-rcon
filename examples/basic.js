@@ -1,27 +1,27 @@
-// This minimal example connects and runs the "help" command.
+// This minimal example connects and runs the 'help' command.
 
-var Rcon = require('../node-rcon');
+const RCON = require('../');
 
-var conn = new Rcon('localhost', 1234, 'password');
+const rcon = new RCON('localhost', 25575, 'password');
 
-conn.on('auth', function() {
+rcon.on('authenticated', () => {
   // You must wait until this event is fired before sending any commands,
   // otherwise those commands will fail.
-  console.log("Authenticated");
-  console.log("Sending command: help")
-  conn.send("help");
-}).on('response', function(str) {
-  console.log("Response: " + str);
-}).on('error', function(err) {
-  console.log("Error: " + err);
-}).on('end', function() {
-  console.log("Connection closed");
-  process.exit();
+  console.log('Authenticated');
+  console.log('Sending command: help')
+  rcon.send('help');
+}).on('response', response => {
+  console.log('Response: ' + response);
+}).on('error', error => {
+  console.error('Error:', error);
+}).on('end', () => {
+  console.log('Connection closed');
+  process.exit(0);
 });
 
-conn.connect();
+rcon.connect();
 
 // connect() will return immediately.
 //
 // If you try to send a command here, it will fail since the connection isn't
-// authenticated yet. Wait for the 'auth' event.
+// authenticated yet. Wait for the 'authenticated' event.

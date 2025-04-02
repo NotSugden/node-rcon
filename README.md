@@ -11,8 +11,7 @@ It was originally created to connect to Minecraft's RCON server.
 ## Installation
 
 npm:
-
-    $ npm install rcon
+  $ npm install rcon
 
 ## Usage
 
@@ -52,21 +51,27 @@ If your application may leave the connection idle for a long time, you can eithe
 new Rcon instance (and connection) each time you need it, or you can send a ping command
 periodically to keep the connection alive.
 
+```javascript
+setInterval(() => {
+  rcon.send('');
+}, 30000)
+```
+
 ## Events
 
 The connection emits the following events:
 
-- .emit('auth')
+- .emit('authenticated')
 
 This is sent in response to an authentication request that was successful.
 
 - .emit('end')
 
-The connection was closed from any reason
+The connection was closed from any reason.
 
 - .emit('response', str)
 
-There was a response returned to a command/message sent to the server
+There was a response returned to a command/message sent to the server.
 
 - .emit('server', str)
 
